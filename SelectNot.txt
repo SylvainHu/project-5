@@ -1,0 +1,66 @@
+SELECT COUNT(numtest) AS "Total number of tests"
+FROM Test;
+
+
+SELECT N.numstud, N.numtest, N.score, S.name, S.firstname
+FROM Notation AS N
+INNER JOIN Student AS S
+ON N.numstud = S.numstud;
+
+
+SELECT N.numstud, N.numtest, N.score, S.name, S.firstname, M.wording
+FROM Notation AS N
+INNER JOIN Student AS S ON N.numstud = S.numstud
+INNER JOIN Test AS T ON N.numtest = T.numtest
+INNER JOIN Matter AS M ON T.codemat = M.codemat;
+
+
+SELECT *
+FROM Notation
+WHERE score >= 10;
+
+
+SELECT N.score, S.name, S.firstname
+FROM Notation AS N
+INNER JOIN Student AS S
+ON N.numstud = S.numstud
+WHERE N.score >= 20;
+
+
+SELECT AVG(N.score) AS average, S.name, S.firstname
+FROM Notation AS N
+INNER JOIN Student AS S ON N.numstud = S.numstud
+GROUP BY S.name, S.firstname;
+
+
+SELECT * FROM Test
+WHERE testdate BETWEEN '2014-01-01' AND '2014-06-30';
+
+
+SELECT T.numtest, T.testdate, T.place, M.wording AS matter
+FROM Test AS T
+INNER JOIN Matter AS M
+ON T.codemat = M.codemat
+ORDER BY T.numtest;
+
+
+SELECT AVG(N.score) AS average, S.name, S.firstname
+FROM Notation AS N
+INNER JOIN Student AS S ON N.numstud = S.numstud
+GROUP BY S.name, S.firstname
+ORDER BY average DESC;
+
+
+SELECT ROUND(AVG(N.score),2) AS average, M.wording
+FROM Notation AS N
+INNER JOIN Test AS T ON N.numtest = T.numtest
+INNER JOIN Matter AS M ON T.codemat = M.codemat
+GROUP BY M.wording
+HAVING COUNT(T.numtest) > 1;
+
+
+SELECT AVG(N.score) AS average, T.numtest AS "test number"
+FROM Notation AS N
+INNER JOIN Test AS T ON N.numtest = T.numtest
+GROUP BY T.numtest
+HAVING COUNT(DISTINCT N.numstud) < 6;

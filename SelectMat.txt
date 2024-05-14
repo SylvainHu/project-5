@@ -1,0 +1,11 @@
+
+
+SELECT wording, CONCAT((coef * 100), '%') AS percentage
+FROM Matter;
+
+SELECT SUM(coef) AS "Sum of Coef of all subjects"
+FROM Matter;
+
+SELECT CONCAT(SUM(coef * 100), '%')
+AS "Sum of Coef of all subjects (as a percentage)"
+FROM Matter;
